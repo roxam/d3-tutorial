@@ -30,8 +30,11 @@
         .style("width", function(d) {
           var barWidth = d * 10;
           return barWidth + "px";
-        });
-
+        })
+        .append("text")
+        .text(function(d) {
+            return d;
+         });
       </script>
       
     
