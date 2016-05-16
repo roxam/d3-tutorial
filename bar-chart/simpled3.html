@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>D3 Bar Chart</title>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+    </head>
+    <body>
+      <style>
+      div.chart {
+        font: 10px sans-serif;
+        background-color:  blue;
+        text-align: right;
+        padding: 3px;
+        margin: 1px;
+        color: white;
+        height: 20px;
+      }
+
+      </style>
+      <script type="text/javascript">
+      var dataset = [ 4, 8, 15, 16, 23, 42 ];
+      
+      d3.select("body").selectAll("div")
+        .data(dataset)
+        .enter()
+        .append("div")
+        .attr("class", "chart")
+        .style("width", function(d) {
+          var barWidth = d * 10;
+          return barWidth + "px";
+        });
+
+      </script>
+      
+    
+
+</body>
+</html>
