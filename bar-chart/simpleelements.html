@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>D3 Bar Chart</title>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+    </head>
+    <body>
+      
+      <style>
+      .chart div {
+        font: 10px sans-serif;
+        background-color:  blue;
+        text-align: right;
+        padding: 3px;
+        margin: 1px;
+        color: white;
+        height: 20px;
+      }
+      .bolded {
+        font-weight: bold;
+      }
+
+      </style>
+      <script type="text/javascript">
+      d3.select("body").append("p").html("I am a paragraph");
+      d3.select("p").style("color","red");
+      d3.select("p").attr("class","bolded");
+
+      //chaining
+      d3.select("body").append("p").html("I am a paragraph").style("color","red").attr("class","bolded");
+
+      //chaining can also look like this
+      d3.select("body").append("p")
+        .html("I am a paragraph")
+        .style("color","red")
+        .attr("class","bolded");
+
+      //selectAll
+      d3.selectAll("p").style("font-weight","normal");
+
+      //using data with selectAll
+      var fontsizes=["10px","20px","30px","40px"];
+      d3.selectAll("p").data(fontsizes).style("font-size",function(d) {return d;});
+
+      d3.selectAll("p")
+        .data(fontsizes)
+        .append("div")
+        .text(function(d) { return d; });
+
+      d3.select("body").selectAll("p").data(fontsizes).enter().append("p").html(function(d){
+        return d;
+      });
+
+
+      </script>
+
+</body>
+</html>
