@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>D3 Bar Chart</title>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+    </head>
+    <body>
+      <style>
+    body { font: 12px Arial;}
+
+    path { 
+        stroke: steelblue;
+        stroke-width: 2;
+        fill: none;
+    }
+
+    .axis path,
+    .axis line {
+        fill: none;
+        stroke: grey;
+        stroke-width: 1;
+        shape-rendering: crispEdges;
+    }
+
+      </style>
+      <script type="text/javascript">
+
+var margin = {top: 30, right: 20, bottom: 30, left: 50},
+    width = 1000,
+    height = 270 - margin.top - margin.bottom;
+
+
+var x = d3.time.scale().range([0, width]);
+x.nice();
+var y = d3.scale.linear().range([height, 0]);
+
+//x is bottom
+var xAxis = d3.svg.axis().scale(x)
+    .orient("bottom").ticks(32);
+
+//y is side
+var yAxis = d3.svg.axis().scale(y)
+    .orient("left").ticks(6);
+
+var valueline = d3.svg.line()
+    .x(function(d) { return x(d.wellId); })
+    .y(function(d) { return y(d.numericalValue); });
+    
+var svg = d3.select("body")
+    .append("svg")
+        .attr("width", width)
+        .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+// Get the data
+d3.csv("../plates.csv", function(error, data) {
+    
+
+    // Scale the range of the data
+    x.domain(d3.extent(data, function(d) { return d.wellId; }));
+    y.domain(d3.extent(data, function(d) { return d.numericalValue; }));
+
+    svg.append("path")      // Add the valueline path.
+        .attr("d", valueline(data));
+
+    svg.append("g")         // Add the X Axis
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")") //makes it show up at the bottom
+        .call(xAxis);
+
+    svg.append("g")         // Add the Y Axis
+        .attr("class", "y axis")
+        .call(yAxis);
+    
+
+
+
+});
+
+
+</script>
+      
+    
+
+</body>
+</html>

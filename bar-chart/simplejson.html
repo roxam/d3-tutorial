@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>D3 Bar Chart</title>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+    </head>
+    <body>
+      <style>
+      .chart {
+        font: 10px sans-serif;
+        background-color:  blue;
+        text-align: right;
+        padding: 3px;
+        margin: 1px;
+        color: white;
+        height: 20px;
+      }
+      
+
+      </style>
+      <script type="text/javascript">
+      var dataset = [
+    {
+      "plateId": 4001718200,
+      "wellId": 4001718208,
+      "numericalValue": 0.14,
+      "measurementType": "biomass",
+      "replicateId": 7000087650,
+      "mainPlateId": 2003087400
+    },
+    {
+      "plateId": 4001718200,
+      "wellId": 4001718209,
+      "numericalValue": 0.0963,
+      "measurementType": "biomass",
+      "replicateId": 7000087661,
+      "mainPlateId": 2003087400
+    },
+    {
+      "plateId": 4001718200,
+      "wellId": 4001718210,
+      "numericalValue": 0.0918,
+      "measurementType": "biomass",
+      "replicateId": 7000087652,
+      "mainPlateId": 2003087400
+    },
+    {
+      "plateId": 4001718200,
+      "wellId": 4001718211,
+      "numericalValue": 0.1627,
+      "measurementType": "biomass",
+      "replicateId": 7000087649,
+      "mainPlateId": 2003087400
+    },
+    {
+      "plateId": 4001718200,
+      "wellId": 4001718212,
+      "numericalValue": 0.2682,
+      "measurementType": "biomass",
+      "replicateId": 7000087639,
+      "mainPlateId": 2003087400
+    },
+    {
+      "plateId": 4001718200,
+      "wellId": 4001718213,
+      "numericalValue": 0.0977,
+      "measurementType": "biomass",
+      "replicateId": 7000087643,
+      "mainPlateId": 2003087400
+    },
+    {
+      "plateId": 4001718200,
+      "wellId": 4001718214,
+      "numericalValue": 0.143,
+      "measurementType": "biomass",
+      "replicateId": 7000087660,
+      "mainPlateId": 2003087400
+    },
+    {
+      "plateId": 4001718200,
+      "wellId": 4001718215,
+      "numericalValue": 0.2801,
+      "measurementType": "biomass",
+      "replicateId": 7000087661,
+      "mainPlateId": 2003087400
+    },
+    {
+      "plateId": 4001718200,
+      "wellId": 4001718216,
+      "numericalValue": 0.0962,
+      "measurementType": "biomass",
+      "replicateId": 7000087649,
+      "mainPlateId": 2003087400
+    },
+    {
+      "plateId": 4001718200,
+      "wellId": 4001718217,
+      "numericalValue": 0.3136,
+      "measurementType": "biomass",
+      "replicateId": 7000087639,
+      "mainPlateId": 2003087400
+    },
+    {
+      "plateId": 4001718200,
+      "wellId": 4001718218,
+      "numericalValue": 0.1152,
+      "measurementType": "biomass",
+      "replicateId": 7000087655,
+      "mainPlateId": 2003087400
+    },
+    {
+      "plateId": 4001718200,
+      "wellId": 4001718219,
+      "numericalValue": 0.088,
+      "measurementType": "biomass",
+      "replicateId": 7000087649,
+      "mainPlateId": 2003087400
+    },
+    {
+      "plateId": 4001718200,
+      "wellId": 4001718220,
+      "numericalValue": 0.0934,
+      "measurementType": "biomass",
+      "replicateId": 7000087644,
+      "mainPlateId": 2003087400
+    },
+    {
+      "plateId": 4001718200,
+      "wellId": 4001718221,
+      "numericalValue": 0.1217,
+      "measurementType": "biomass",
+      "replicateId": 7000087661,
+      "mainPlateId": 2003087400
+    },
+    {
+      "plateId": 4001718200,
+      "wellId": 4001718222,
+      "numericalValue": 0.0919,
+      "measurementType": "biomass",
+      "replicateId": 7000087655,
+      "mainPlateId": 2003087400
+    }
+  ];
+
+
+      d3.select("body").selectAll("div")
+        .data(dataset)
+        .enter()
+        .append("div")
+        .attr("class", "chart")
+        .style("width", function(d) {
+          return (d.numericalValue * 1000) + "px";
+        })
+        .text(function(d) {
+          return d.wellId;
+        });
+
+      </script>
+      
+    
+
+</body>
+</html>
