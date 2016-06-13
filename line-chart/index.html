@@ -22,6 +22,9 @@
         stroke-width: 1;
         shape-rendering: crispEdges;
     }
+    .tick {
+        display:none;
+    }
 
       </style>
       <script type="text/javascript">
@@ -32,12 +35,11 @@ var margin = {top: 30, right: 20, bottom: 30, left: 50},
 
 
 var x = d3.time.scale().range([0, width]);
-x.nice();
 var y = d3.scale.linear().range([height, 0]);
 
 //x is bottom
-var xAxis = d3.svg.axis().scale(x)
-    .orient("bottom").ticks(32);
+var xAxis = d3.svg.axis().scale(x);
+    //.orient("bottom").ticks(32);
 
 //y is side
 var yAxis = d3.svg.axis().scale(y)
@@ -56,21 +58,40 @@ var svg = d3.select("body")
 
 // Get the data
 d3.csv("../plates.csv", function(error, data) {
+
+    data.forEach(function(d) {
+        d.wellId = +d.wellId;
+    });
     
 
     // Scale the range of the data
     x.domain(d3.extent(data, function(d) { return d.wellId; }));
     y.domain(d3.extent(data, function(d) { return d.numericalValue; }));
 
-    svg.append("path")      // Add the valueline path.
+    // Add the valueline path.
+    svg.append("path")
         .attr("d", valueline(data));
 
-    svg.append("g")         // Add the X Axis
+    // Add the X Axis
+    svg.append("g")
         .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")") //makes it show up at the bottom
-        .call(xAxis);
+        .data(data)
+        // makes it show up at the bottom
+        .attr("transform", "translate(0," + height + ")")
+        .enter().append("text")
+          .text(function(d){
+            return d.wellId;
+          })
+            .attr("y", 0)
+            .attr("x", 9)
+            .attr("dy", ".35em")
+            .attr("transform", "rotate(90)")
+            .style("text-anchor", "start")
+        .call(xAxis)
+        
 
-    svg.append("g")         // Add the Y Axis
+    // Add the Y Axis
+    svg.append("g")
         .attr("class", "y axis")
         .call(yAxis);
     

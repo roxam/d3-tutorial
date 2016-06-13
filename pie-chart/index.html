@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <style>
+  body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin: auto;
+    position: relative;
+    width: 960px;
+  }
+  text {
+    font: 10px sans-serif;
+  }
+  
+  </style>
+</head>
+<body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+<script>
+
+// built-in color scale function for the pie chart colors
+//var color = d3.rgb();
+
+// SVG container size and radius of the pie chart
+var width = 960;
+var height = 500;
+var radius = Math.min(width, height) / 2;
+
+// create the SVG container
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+  .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+
+
+// The arc function is a D3 provided generator that helps to draw the SVG Shape.
+var arc = d3.svg.arc()
+    .innerRadius(radius - 100)
+    .outerRadius(radius - 20);
+
+var path = svg.selectAll("path");
+
+var pass_count = 0;
+var fail_count = 0;
+var unknown_count = 0;
+
+d3.csv("../plate_4002423400_wells.csv", function(error, data) {
+  data.forEach(function(d) {
+    
+    
+    
+    if(d.qc_pass == "pass") {
+      pass_count++;
+    }
+    else if(d.qc_pass == "fail") {
+      fail_count++;
+    }
+    else {
+      unknown_count++;
+    }
+
+    
+    
+    
+  });
+
+  var dataset = [
+      { label: 'Pass', count: pass_count, color: "#2DB932" }, 
+      { label: 'Fail', count: fail_count, color: "#FF0000" },
+      { label: 'Unknown', count: unknown_count, color: "#333" }
+    ];
+
+
+
+// D3 Chart Layout Helper
+// Computes the start and end angles of the arcs based on data that is passed in to the function.
+var pie = d3.layout.pie(dataset)
+    .value(function(d) { return d.count; })
+    .sort(null);
+
+
+  var g = svg.selectAll(".arc")
+      .data(pie(dataset))
+    .enter().append("g")
+      .attr("class","arc");
+
+  g.append("path")
+    .attr("d",arc)
+    .style("fill", function(d) {
+      return d3.rgb(d.data.color);
+    });
+
+  g.append("text")
+    .attr("transform",function(dataset){ 
+      return "translate(" + arc.centroid(dataset) + ")"; 
+    })
+    .attr("dy", ".35em")
+    .style("text-anchor", "middle")
+    .text(function(d){
+      // don't show label if there is no data
+      if(d.data.count === 0) {
+        return;
+      }
+      return d.data.label;
+    });
+
+});
+
+</script>
+</body>
+</html>
